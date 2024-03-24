@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Jenkins Test Suite">
+    <test name="Jenkins Test">
+        <classes>
+            <class name="tn.esprit.devops_project.services.ActivitySectorImplTest" />
+            <class name="tn.esprit.devops_project.services.InvoiceServiceImplTest" />
+        </classes>
+    </test>
+</suite>

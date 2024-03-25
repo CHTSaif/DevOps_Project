@@ -1,0 +1,48 @@
+pipeline {
+        agent any
+        stages {
+
+        stage("Source") {
+          agent any
+          steps {
+              git branch: 'main', url: 'https://github.com/CHTSaif/DevOps_Project.git'
+          }
+        }
+
+        
+          stage("Build") {
+            agent any
+            steps {
+                sh 'mvn clean package'
+            }
+          }
+           stage("Unit Tests") {
+            agent any  
+            steps {
+              sh 'mvn clean install'
+            }
+          }
+
+          stage("SonarQube Analysis") {
+            agent any  
+            steps {
+              sh 'mvn sonar:sonar'
+            }
+          }
+
+          stage('Approve Deployment') {
+              agent any
+              input{
+                   message "Do you want to proceed for deployment?"
+                      }
+              steps {
+                  //Add deploy steps & Alerts below
+                  sh 'echo "Deploying into Server"' 
+
+                }
+          } 
+          
+        }
+        
+}
+

@@ -85,10 +85,15 @@ pipeline {
                     } else {
                         error "*** File: ${artifactPath}, could not be found";
                     }
+
                 }
             }
         }
-          
+        stage("Run Docker Compose") {
+          agent any
+          steps {
+            sh 'docker-compose up -d'
+          }
         }
         
 }

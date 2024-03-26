@@ -11,7 +11,7 @@ pipeline {
    
         NEXUS_URL = "localhost:8081"
    
-        NEXUS_REPOSITORY = "LoginWebApp"
+        NEXUS_REPOSITORY = "maven-releases"
        
         NEXUS_CREDENTIAL_ID = "nexus_cred"
         
@@ -92,4 +92,3 @@ pipeline {
         }
         
 }
-

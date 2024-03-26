@@ -1,7 +1,7 @@
 version: "3"
 services:
   application:
-    image: devOps_Project
+    image: devops_project
     ports:
       - "8082:8082"
     networks:

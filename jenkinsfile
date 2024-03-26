@@ -1,8 +1,6 @@
 pipeline {
         agent any
-         triggers {
-        pollSCM('* * * * *')
-         }
+       
         environment {
     
         NEXUS_VERSION = "nexus3"
@@ -87,6 +85,12 @@ pipeline {
                     }
 
                 }
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t devops_project .'
             }
         }
         stage("Run Docker Compose") {

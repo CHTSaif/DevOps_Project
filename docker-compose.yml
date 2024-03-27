@@ -20,5 +20,7 @@ services:
       - MYSQL_DATABASE=devops
     volumes:
       - /data/mysql
+    ports:
+    - 3306:3306
 networks:
   springboot-db-net:

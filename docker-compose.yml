@@ -1,7 +1,22 @@
-version: "3"
+version: "3.8"
+
+mysqldb:
+    image: mysql:5.7
+    networks:
+      - springboot-db-net
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=devops
+    volumes:
+      - var/lib/mysql
+    ports:
+    - 3306:3306
+    restart: unless-stopped
+    
 services:
   application:
     image: devops_project
+    build: .
     ports:
       - "8082:8082"
     networks:
@@ -11,16 +26,6 @@ services:
     volumes:
       - /data/springboot-app
     
-  mysqldb:
-    image: mysql:5.7
-    networks:
-      - springboot-db-net
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=devops
-    volumes:
-      - /data/mysql
-    ports:
-    - 3306:3306
+  
 networks:
   springboot-db-net:

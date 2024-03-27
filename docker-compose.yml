@@ -12,7 +12,7 @@ mysqldb:
     ports:
     - 3306:3306
     restart: unless-stopped
-    
+
 services:
   application:
     image: devops_project
@@ -24,7 +24,9 @@ services:
     depends_on:
       - mysqldb
     volumes:
-      - /data/springboot-app
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
     
   
 networks:

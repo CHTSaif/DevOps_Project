@@ -11,7 +11,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=devops
     volumes:
-      - db:/var/lib/mysql
+      - /data/mysql
     restart: unless-stopped
 
   application:
@@ -24,9 +24,8 @@ services:
     depends_on:
       - mysqldb
     volumes:
-      - .m2:/root/.m2
-    stdin_open: true
-    tty: true
+      - /data/springboot-app
+    
     
   
 networks:

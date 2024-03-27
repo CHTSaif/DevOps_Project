@@ -18,7 +18,7 @@ pipeline {
         stages {
 
         stage("Check out") {
-          agent any
+          
           steps {
               git branch: 'main', url: 'https://github.com/CHTSaif/DevOps_Project.git'
           }
@@ -26,7 +26,7 @@ pipeline {
 
         
           stage("Build") {
-            agent any
+           
             steps {
                 sh 'mvn clean package -DskipTests=true'
             }
@@ -34,17 +34,23 @@ pipeline {
            
 
           stage("SonarQube Analysis") {
-            agent any  
+             
             steps {
               sh 'mvn sonar:sonar'
             }
           }
            stage("Unit Tests") {
-            agent any
+            
             steps {
                 sh 'mvn test'
             }
         }
+
+           stage('List files') {
+    steps {
+        sh 'ls -la'
+    }
+    }
 
           stage("publish to nexus") {
             steps {
@@ -94,7 +100,7 @@ pipeline {
             }
         }
         stage("Run Docker Compose") {
-          agent any
+          
           steps {
             sh 'docker-compose up -d'
           }

@@ -2,7 +2,7 @@ FROM openjdk:11-jdk-slim
 
 EXPOSE 8082
 
-COPY target/DevOps_Project.jar DevOps_Project.jar
+COPY target/DevopsApp.jar DevopsApp.jar
 
 
-ENTRYPOINT ["java","-jar","/DevOps_Project.jar"]
+ENTRYPOINT ["java","-jar","/DevopsApp.jar"]

@@ -10,8 +10,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=devops
-    volumes:
-      - ./data/mysql:/var/lib/mysql
+   
     restart: unless-stopped
 
   application:
@@ -23,8 +22,7 @@ services:
       - springboot-db-net
     depends_on:
       - mysqldb
-    volumes:
-      - /data/springboot-app
+  
     
     
   

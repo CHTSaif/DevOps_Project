@@ -1,6 +1,9 @@
 version: "3.8"
 
-mysqldb:
+
+
+services:
+  mysqldb:
     image: mysql:5.7
     networks:
       - springboot-db-net
@@ -8,12 +11,9 @@ mysqldb:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=devops
     volumes:
-      - var/lib/mysql
-    ports:
-    - 3306:3306
+      - db:/var/lib/mysql
     restart: unless-stopped
 
-services:
   application:
     image: devops_project
     build: .

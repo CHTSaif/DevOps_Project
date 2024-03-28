@@ -12,6 +12,19 @@ services:
       - MYSQL_DATABASE=devops
    
     restart: unless-stopped
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+    restart: always
+    ports:
+      - 8083:80
+    networks:
+      - springboot-db-net
+    depends_on:
+      - mysqldb
+
 
   application:
     image: devops_project
@@ -23,6 +36,8 @@ services:
     depends_on:
       - mysqldb
   
+  
+
     
     
   

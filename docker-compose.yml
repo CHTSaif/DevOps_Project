@@ -5,7 +5,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: devops
-      MYSQL_USER: root
+      MYSQL_USER: saif
       MYSQL_PASSWORD: root
     volumes:
       - db_data:/var/lib/mysql
@@ -25,9 +25,6 @@ services:
       - 8084:8084
     depends_on:
       - db
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/test?useSSL=false
-      SPRING_DATASOURCE_USERNAME: user
-      SPRING_DATASOURCE_PASSWORD: password
+  
 volumes:
   db_data: {}

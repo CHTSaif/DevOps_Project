@@ -1,7 +1,5 @@
 version: "3.8"
 
-
-
 services:
   mysqldb:
     image: mysql:5.7
@@ -10,8 +8,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=devops
-   
     restart: unless-stopped
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -25,7 +23,6 @@ services:
     depends_on:
       - mysqldb
 
-
   application:
     image: devops_project
     build: .
@@ -35,11 +32,7 @@ services:
       - springboot-db-net
     depends_on:
       - mysqldb
-  
-  
 
-    
-    
-  
 networks:
   springboot-db-net:
+    driver: bridge

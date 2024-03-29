@@ -22,7 +22,7 @@ services:
   app:
     build: .
     ports:
-      - 8084:8084
+      - 8082:8082
     depends_on:
       - db
   

@@ -1,6 +1,6 @@
 FROM openjdk:11-jdk-slim
 
-EXPOSE 8082
+EXPOSE 8084
 
 COPY target/DevopsApp.jar DevopsApp.jar
 

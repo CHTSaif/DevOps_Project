@@ -4,6 +4,7 @@
         <classes>
             <class name="tn.esprit.devops_project.services.ActivitySectorImplTest" />
             <class name="tn.esprit.devops_project.services.InvoiceServiceImplTest" />
+            <class name="tn.esprit.devops_project.controllers.StockControllerTest" />
         </classes>
     </test>
 </suite>

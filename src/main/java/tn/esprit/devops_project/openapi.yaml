@@ -4,7 +4,7 @@ info:
   description: Summer_Workshop
   version: 1.0.0
 servers:
-  - url: 'http://localhost:8084
+  - url: 'http://localhost:8082
 '
 paths:
   /product:

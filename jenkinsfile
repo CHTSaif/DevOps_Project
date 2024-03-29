@@ -14,10 +14,18 @@ pipeline {
         NEXUS_CREDENTIAL_ID = "nexus_cred"
         
         ARTIFACT_VERSION = "${BUILD_NUMBER}"
+        
+        registryCredential ="dockerhub"
+        
+        registry = "saifchtourou/test"
+        
+        dockerImage = ""
+        dockerlatest = ""
+        
     }
         stages {
 
-        stage("Check out") {
+        stage("Clone") {
           
           steps {
               git branch: 'main', url: 'https://github.com/CHTSaif/DevOps_Project.git'
@@ -28,13 +36,13 @@ pipeline {
           stage("Build") {
            
             steps {
-                sh 'mvn clean package -DskipTests=true'
+                sh 'mvn clean compile -DskipTests=true'
             }
           }
            
 
          
-           stage("Unit Tests") {
+           stage("Tests") {
             
             steps {
                 sh 'mvn test'
@@ -47,25 +55,32 @@ pipeline {
               sh 'mvn clean test org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar'
             }
           }
+          stage('package code'){
+            steps{
+               sh 'mvn package'
+            }
+            post {
+                    success {
+                        archiveArtifacts 'target/*.jar'
+                    }
+            }
+            
+        }
 
-           stage('List files') {
-    steps {
-        sh 'ls -la'
-    }
-    }
+        
 
           stage("publish to nexus") {
             steps {
-                script {
+                 script {
                     // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
                     pom = readMavenPom file: "pom.xml";
                     // Find built artifact under target folder
                     filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
                     // Print some info from the artifact found
-                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
-                    // Extract the path from the File found
+                     echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
+                     Extract the path from the File found
                     artifactPath = filesByGlob[0].path;
-                    // Assign to a boolean response verifying If the artifact name exists
+                     Assign to a boolean response verifying If the artifact name exists
                     artifactExists = fileExists artifactPath;
 
                     if(artifactExists) {
@@ -99,15 +114,34 @@ pipeline {
         stage('Docker Build') {
             steps {
                 sh 'docker build -t devops_project .'
+                script {
+                    dockerImage = docker.build registry + ":${env.BUILD_ID}"
+                    dockerlatest = docker.build registry + ":latest"
+                }
+       
             }
         }
-        stage("Run Docker Compose") {
+        stage("docker compose") {
           
           steps {
             sh 'docker-compose down --remove-orphans'
             sh 'docker-compose up -d'
           }
         }
+          stage('push Docker  Hub'){
+
+                 steps {
+                         script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                        dockerlatest.push()
+                    }
+              }
+                    }
+           
         
 }
+}
+    
+    
 }

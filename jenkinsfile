@@ -33,18 +33,20 @@ pipeline {
           }
            
 
-          stage("SonarQube Analysis") {
-             
-            steps {
-              sh 'mvn sonar:sonar'
-            }
-          }
+         
            stage("Unit Tests") {
             
             steps {
                 sh 'mvn test'
             }
         }
+
+         stage("SonarQube Analysis") {
+             
+            steps {
+              sh 'mvn clean test org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar'
+            }
+          }
 
            stage('List files') {
     steps {
